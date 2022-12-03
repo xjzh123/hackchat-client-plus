@@ -124,6 +124,15 @@
         <button id="img-upload" type="button">Upload Image</button>
       </p>
       <p>
+        <label for="gyazo-upload">Choose a profile picture:</label>
+
+        <input type="file"
+               id="gyazo-upload" name="gyazo-upload"
+               accept="image/png, image/jpeg"
+               onchange="getfile()">
+        
+      </p>
+      <p>
         <button id="clear-messages" type="button">Clear all messages</button>
       </p>
       <p>
@@ -149,6 +158,7 @@
       </div>
     </div>
   </nav>
+  <script src="gyazo.js"></script>
   <script src="client.js"></script>
 </body>
 
