@@ -5,11 +5,11 @@ function getfile() {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify({ reqtype:"fileupload", fileToUpload:file })
     })
     .then(response => response.json())
     .then(response => console.log(JSON.stringify(response)))
 }
-//1
