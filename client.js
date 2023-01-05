@@ -193,11 +193,6 @@ Object.defineProperty(this, 'frontpage', {
 	].join("\n")
 })
 
-/**
- * 
- * @param {String} query 
- * @returns {Element}
- */
 function $(query) {
 	return document.querySelector(query);
 }
@@ -563,58 +558,24 @@ var COMMANDS = {
 	},
 
 	captcha: function (args) {
-		const NS = 'http://www.w3.org/2000/svg'
-
-		let messageEl = document.createElement('div');
-		messageEl.classList.add('info', 'message');
+		var messageEl = document.createElement('div');
+		messageEl.classList.add('info');
 
 
-		let nickSpanEl = document.createElement('span');
+		var nickSpanEl = document.createElement('span');
 		nickSpanEl.classList.add('nick');
 		messageEl.appendChild(nickSpanEl);
 
-		let nickLinkEl = document.createElement('a');
+		var nickLinkEl = document.createElement('a');
 		nickLinkEl.textContent = '#';
 		nickSpanEl.appendChild(nickLinkEl);
 
-		let pEl = document.createElement('p')
-		pEl.classList.add('text')
+		var textEl = document.createElement('pre');
+		textEl.classList.add('text');
+		textEl.classList.add('captcha');//css optimization for captcha
+		textEl.innerHTML = args.text;
 
-		let lines = args.text.split(/\n/g)
-
-		// Core principle: In SVG text can be smaller than 12px even in Chrome.
-		let svgEl = document.createElementNS(NS, 'svg')
-		svgEl.setAttribute('white-space', 'pre')
-		svgEl.style.backgroundColor = '#4e4e4e'
-		svgEl.style.width = '100%'
-
-		// In order to make 40em work right.
-		svgEl.style.fontSize = `${$('#messages').clientWidth / 150 * 2}px`
-		// Captcha text is about 40 lines.
-		svgEl.style.height = '40em'
-
-		// I have tried `white-space: pre` but it didn't work, so I write each line in individual text tags.
-		for (let i = 0; i < lines.length; i++) {
-			let line = lines[i]
-			let textEl = document.createElementNS(NS, 'text')
-			textEl.innerHTML = line
-
-			// In order to make it in the right position. 
-			textEl.setAttribute('y', `${i + 1}em`)
-
-			// Captcha text shouldn't overflow #messages element, so I divide the width of the messages container with the overvalued length of each line in order to get an undervalued max width of each character, and than multiply it by 2 (The overvalued aspect ratio of a character) because the font-size attribute means the height of a character. 
-			textEl.setAttribute('font-size', `${$('#messages').clientWidth / 150 * 2}px`)
-			textEl.setAttribute('fill', 'white')
-
-			// Preserve spaces.
-			textEl.style.whiteSpace = 'pre'
-
-			svgEl.appendChild(textEl)
-		}
-
-		pEl.appendChild(svgEl)
-
-		messageEl.appendChild(pEl);
+		messageEl.appendChild(textEl);
 		$('#messages').appendChild(messageEl);
 
 		window.scrollTo(0, document.body.scrollHeight);
@@ -1216,14 +1177,6 @@ $('#special-cmd').onclick = function () {
 				}, function () {
 					pushMessage({ nick: '!', text: "Failed to copy log to clipboard." })
 				});
-			},
-		preview:
-			function (...args) {
-				$('#messages').innerHTML = '';
-				pushMessage({ nick: '*', text: '信息测试' })
-				pushMessage({ nick: '!', text: '警告测试' })
-				pushMessage({ nick: '[test]', text: '# 标题测试\n\n正文测试\n\n[链接测试](https://hcwiki.github.io/)\n\n> 引用测试' })
-				$('#footer').classList.remove('hidden')
 			}
 	}
 	cmdArray = cmdText.split(' ')
@@ -1635,10 +1588,9 @@ var schemes = [
 	'rainbow',
 	'turbid-jade',
 	'old-paper',
-	'chemistory-blue',
+	'chemstory-blue',
 	// 'crosst-chat-night',
-	// 'crosst-chat-city',
-	'backrooms-liminal',
+	// 'crosst-chat-city'
 ];
 
 var highlights = [
