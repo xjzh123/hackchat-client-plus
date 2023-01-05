@@ -1216,14 +1216,6 @@ $('#special-cmd').onclick = function () {
 				}, function () {
 					pushMessage({ nick: '!', text: "Failed to copy log to clipboard." })
 				});
-			},
-		preview:
-			function (...args) {
-				$('#messages').innerHTML = '';
-				pushMessage({ nick: '*', text: '信息测试' })
-				pushMessage({ nick: '!', text: '警告测试' })
-				pushMessage({ nick: '[test]', text: '# 标题测试\n\n正文测试\n\n[链接测试](https://hcwiki.github.io/)\n\n> 引用测试' })
-				$('#footer').classList.remove('hidden')
 			}
 	}
 	cmdArray = cmdText.split(' ')
@@ -1635,10 +1627,9 @@ var schemes = [
 	'rainbow',
 	'turbid-jade',
 	'old-paper',
-	'chemistory-blue',
+	'chemstory-blue',
 	// 'crosst-chat-night',
-	// 'crosst-chat-city',
-	'backrooms-liminal',
+	// 'crosst-chat-city'
 ];
 
 var highlights = [
